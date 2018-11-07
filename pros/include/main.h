@@ -80,6 +80,11 @@ void opcontrol(void);
  */
 //#include <iostream>
 #include "auto.hpp"
+#include "Drive.hpp"
+#include "Intake.hpp"
+#include "Lift.hpp"
+#include "Shooter.hpp"
+#include "Turner.hpp"
 #endif
 
 #endif  // _PROS_MAIN_H_

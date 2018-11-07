@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+pros/bin/output.bin
+pros/bin/output.elf
+pros/compile_commands.json
