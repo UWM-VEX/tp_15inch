@@ -16,6 +16,7 @@
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while (true) {
-		
+		::std::cout << "Driving" << ::std::endl;
+		robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 	}
 }
