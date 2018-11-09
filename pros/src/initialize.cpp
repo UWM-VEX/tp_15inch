@@ -140,6 +140,9 @@ void initialize()
 {
 	robotDrive.makeDrive(1,2,3,4);
 	robotIntake.makeIntake(5,6);
+	robotLift.makeLift(7,8);
+	robotShooter.makeShooter(9);
+	robotTurner.makeTurner(10);
 }
 
 /**

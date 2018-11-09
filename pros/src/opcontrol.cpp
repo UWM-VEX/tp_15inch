@@ -32,6 +32,19 @@ void opcontrol() {
 			robotIntake.setRoller(0);
 		}
 
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+		{
+			robotTurner.set(127);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+		{
+			robotTurner.set(-127);
+		}
+		else
+		{
+			robotTurner.set(0);
+		}
+
 		pros::delay(20);
 	}
 }
