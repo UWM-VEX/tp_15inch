@@ -57,7 +57,6 @@
 #define RED 0
 #define BLUE 1
 
-#include "Utilities.hpp"
 #include "auto.hpp"
 #include "Drive.hpp"
 #include "Intake.hpp"

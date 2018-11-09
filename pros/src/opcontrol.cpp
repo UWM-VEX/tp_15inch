@@ -18,7 +18,20 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	while (true) {
 		robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
-		
+
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+		{
+			robotIntake.setRoller(127);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
+		{
+			robotIntake.setRoller(-127);
+		}
+		else
+		{
+			robotIntake.setRoller(0);
+		}
+
 		pros::delay(20);
 	}
 }

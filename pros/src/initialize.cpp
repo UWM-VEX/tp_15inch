@@ -139,6 +139,7 @@ void lcdModeSelect()
 void initialize() 
 {
 	robotDrive.makeDrive(1,2,3,4);
+	robotIntake.makeIntake(5,6);
 }
 
 /**

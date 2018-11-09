@@ -273,11 +273,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/Utilities.cpp.o",
-            "src\\Utilities.cpp"
+            "bin/Drive.cpp.o",
+            "src\\Drive.cpp"
         ],
         "directory": "C:\\Users\\Erik\\Documents\\GitHub\\tp_15inch\\pros",
-        "file": "src\\Utilities.cpp"
+        "file": "src\\Drive.cpp"
     },
     {
         "arguments": [
@@ -343,11 +343,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/Drive.cpp.o",
-            "src\\Drive.cpp"
+            "bin/Intake.cpp.o",
+            "src\\Intake.cpp"
         ],
         "directory": "C:\\Users\\Erik\\Documents\\GitHub\\tp_15inch\\pros",
-        "file": "src\\Drive.cpp"
+        "file": "src\\Intake.cpp"
     },
     {
         "arguments": [
