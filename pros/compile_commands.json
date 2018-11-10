@@ -168,11 +168,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/Drive.cpp.o",
-            "src\\Drive.cpp"
+            "bin/Turner.cpp.o",
+            "src\\Turner.cpp"
         ],
         "directory": "C:\\Users\\Erik\\Documents\\GitHub\\tp_15inch\\pros",
-        "file": "src\\Drive.cpp"
+        "file": "src\\Turner.cpp"
     },
     {
         "arguments": [
@@ -273,11 +273,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/Shooter.cpp.o",
-            "src\\Shooter.cpp"
+            "bin/Drive.cpp.o",
+            "src\\Drive.cpp"
         ],
         "directory": "C:\\Users\\Erik\\Documents\\GitHub\\tp_15inch\\pros",
-        "file": "src\\Shooter.cpp"
+        "file": "src\\Drive.cpp"
     },
     {
         "arguments": [
@@ -378,10 +378,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/Turner.cpp.o",
-            "src\\Turner.cpp"
+            "bin/Shooter.cpp.o",
+            "src\\Shooter.cpp"
         ],
         "directory": "C:\\Users\\Erik\\Documents\\GitHub\\tp_15inch\\pros",
-        "file": "src\\Turner.cpp"
+        "file": "src\\Shooter.cpp"
     }
 ]

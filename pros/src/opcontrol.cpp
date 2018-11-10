@@ -19,24 +19,53 @@ void opcontrol() {
 	while (true) {
 		robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
+			robotShooter.set(127);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		{
+			robotShooter.set(-127);
+		}
+		else
+		{
+			robotShooter.set(0);
+		}
+
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
 		{
 			robotIntake.setRoller(127);
+			robotIntake.setElevator(127);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
 		{
 			robotIntake.setRoller(-127);
+			robotIntake.setElevator(-127);
 		}
 		else
 		{
 			robotIntake.setRoller(0);
+			robotIntake.setElevator(0);
+		}
+
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		{
+			robotLift.set(127);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		{
+			robotLift.set(-127);
+		}
+		else
+		{
+			robotLift.set(0);
 		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
 		{
 			robotTurner.set(127);
 		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
 		{
 			robotTurner.set(-127);
 		}

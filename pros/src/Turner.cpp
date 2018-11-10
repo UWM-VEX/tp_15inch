@@ -13,6 +13,8 @@ void Turner::makeTurner(int driverPort)
 
 	Motor* driverMotor = new Motor((std::uint8_t) driverPort, E_MOTOR_GEARSET_18, driverReverse, E_MOTOR_ENCODER_ROTATIONS);
 
+	driver = (Motor*) malloc(sizeof(Motor));
+
 	memcpy(driver, driverMotor, sizeof(*driverMotor));
 }
 

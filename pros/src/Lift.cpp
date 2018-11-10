@@ -13,12 +13,16 @@ void Lift::makeLift(int leftPort, int rightPort)
 
 	Motor* leftMotor = new Motor((std::uint8_t) leftPort, E_MOTOR_GEARSET_18, leftReverse, E_MOTOR_ENCODER_ROTATIONS);
 
+	left = (Motor*) malloc(sizeof(Motor));
+
 	memcpy(left, leftMotor, sizeof(*leftMotor));
 
 	bool rightReverse = rightPort < 0;
 	if(rightPort < 0) rightPort *= -1;
 
 	Motor* rightMotor = new Motor((std::uint8_t) rightPort, E_MOTOR_GEARSET_18, rightReverse, E_MOTOR_ENCODER_ROTATIONS);
+
+	right = (Motor*) malloc(sizeof(Motor));
 
 	memcpy(right, rightMotor, sizeof(*rightMotor));
 }

@@ -6,17 +6,29 @@ Shooter robotShooter;
 
 Shooter::Shooter() {};
 
-void Shooter::makeShooter(int driverPort)
+void Shooter::makeShooter(int driver1Port, int driver2Port)
 {
-	bool driverReverse = driverPort < 0;
-	if(driverPort < 0) driverPort *= -1;
+	bool driver1Reverse = driver1Port < 0;
+	if(driver1Port < 0) driver1Port *= -1;
 
-	Motor* driverMotor = new Motor((std::uint8_t) driverPort, E_MOTOR_GEARSET_18, driverReverse, E_MOTOR_ENCODER_ROTATIONS);
+	Motor* driver1Motor = new Motor((std::uint8_t) driver1Port, E_MOTOR_GEARSET_18, driver1Reverse, E_MOTOR_ENCODER_ROTATIONS);
 
-	memcpy(driver, driverMotor, sizeof(*driverMotor));
+	driver1 = (Motor*) malloc(sizeof(Motor));
+
+	memcpy(driver1, driver1Motor, sizeof(*driver1Motor));
+
+	bool driver2Reverse = driver2Port < 0;
+	if(driver2Port < 0) driver2Port *= -1;
+
+	Motor* driver2Motor = new Motor((std::uint8_t) driver2Port, E_MOTOR_GEARSET_18, driver2Reverse, E_MOTOR_ENCODER_ROTATIONS);
+
+	driver2 = (Motor*) malloc(sizeof(Motor));
+
+	memcpy(driver2, driver2Motor, sizeof(*driver2Motor));
 }
 
 void Shooter::set(int speed)
 {
-	driver->move(speed);
+	driver1->move(speed);
+	driver2->move(speed);
 }
