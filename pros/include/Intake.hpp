@@ -3,7 +3,13 @@
 
 class Intake{
 private:
-ChassisControllerIntegrated chassis;
+	pros::Motor* roller;
+	pros::Motor* elevator;
+public:
+	Intake();
+	void makeIntake(int rollerPort, int elevatorPort);
+	void setRoller(int speed);
+	void setElevator(int speed);
 };
 
 extern Intake robotIntake;

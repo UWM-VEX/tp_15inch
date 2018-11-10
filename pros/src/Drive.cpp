@@ -49,3 +49,6 @@ okapi::ChassisControllerIntegrated Drive::makeDrive()
 
 	//memcpy(chassis, &myChassis, sizeof(okapi::ChassisControllerIntegrated));
 }
+	rearLeft->move(left);
+	rearRight->move(right);
+}

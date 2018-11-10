@@ -2,6 +2,11 @@
 #define _DRIVE_HPP_
 
 #include "main.h"
+private:
+	pros::Motor* frontLeft;
+	pros::Motor* frontRight;
+	pros::Motor* rearLeft;
+	pros::Motor* rearRight;
 
 class Drive{
 private:
