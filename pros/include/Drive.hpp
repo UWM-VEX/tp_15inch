@@ -5,12 +5,15 @@
 
 class Drive{
 private:
-	ChassisControllerIntegrated* chassis;
+	int8_t frontLeft;
+	int8_t frontRight;
+	int8_t rearLeft;
+	int8_t rearRight;
 public:
 	//Drive(int8_t frontLeft, int8_t frontRight, int8_t rearLeft, int8_t rearRight);
 	Drive();
-	void tankDrive(int left, int right);
-	void makeDrive(int8_t frontLeft, int8_t frontRight, int8_t rearLeft, int8_t rearRight);
+	void initDrive(int8_t frontLeftPort, int8_t frontRightPort, int8_t rearLeftPort, int8_t rearRightPort);
+	okapi::ChassisControllerIntegrated makeDrive();
 };
 
 extern Drive robotDrive;
