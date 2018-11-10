@@ -80,7 +80,7 @@ void opcontrol() {
 		{
 			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
 			{
-				robotTurner.set(40);
+				robotTurner.set(-40);
 			}
 			else
 			{
