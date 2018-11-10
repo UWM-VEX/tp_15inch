@@ -16,6 +16,10 @@
 
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+	bool lastTurnerRotate = false;
+	bool turnerAuto = false;
+
 	while (true) {
 		robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 
@@ -62,18 +66,28 @@ void opcontrol() {
 		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
-		{
-			robotTurner.set(127);
-		}
+			turnerAuto = false;
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
+			turnerAuto = true;
+
+		if(turnerAuto)
 		{
-			robotTurner.set(-127);
+			robotTurner.rotate180(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) && ! lastTurnerRotate);
+
+			lastTurnerRotate = master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
 		}
 		else
 		{
-			robotTurner.set(0);
+			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+			{
+				robotTurner.set(127);
+			}
+			else
+			{
+				robotTurner.set(0);
+			}
 		}
-
+		
 		pros::delay(20);
 	}
 }

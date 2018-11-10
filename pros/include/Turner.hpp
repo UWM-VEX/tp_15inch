@@ -7,6 +7,7 @@ public:
 	Turner();
 	void makeTurner(int driverPort);
 	void set(int speed);
+	bool rotate180(bool isFirstTime);
 };
 
 extern Turner robotTurner;
