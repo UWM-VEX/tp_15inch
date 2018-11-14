@@ -10,4 +10,7 @@ struct AutonomousInfo {
 
 extern AutonomousInfo autonomousInfoStruct;
 
+#define DO_NOTHING 0
+#define TEST 1
+
 #endif

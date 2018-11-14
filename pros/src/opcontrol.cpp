@@ -24,6 +24,10 @@ void opcontrol() {
 	while (true) {
 		::std::cout << "Driving" << ::std::endl;
 		opcontrolDrive.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
+			robotShooter.set(127);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{

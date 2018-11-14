@@ -49,9 +49,3 @@ okapi::ChassisControllerIntegrated Drive::makeDrive()
 
 	//memcpy(chassis, &myChassis, sizeof(okapi::ChassisControllerIntegrated));
 }
-	rearLeft->move(left);
-	rearRight->move(right);
-
-	lcd::print(1, "Left: %f", frontLeft->get_temperature());
-	lcd::print(2, "Right: %f", frontRight->get_temperature());
-}

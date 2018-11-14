@@ -13,10 +13,16 @@
  */
 void autonomous()
 {
+	okapi::ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
+
 	switch(autonomousInfoStruct.mode)
 	{
-		case(0):
+		case(DO_NOTHING):
 
+		break;
+		case(TEST):
+			autoDrive.moveDistance(1_ft);
+			autoDrive.turnAngle(90_deg);
 		break;
 		default:
 		// Do nothing
