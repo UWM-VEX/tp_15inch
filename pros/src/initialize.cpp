@@ -138,12 +138,14 @@ void lcdModeSelect()
  */
 void initialize() 
 {
-	robotDrive.makeDrive(-4,3,-5,7);
+	robotDrive.makeDrive(-5,3,-11,7);
 	robotIntake.makeIntake(2,-20);
 	robotLift.makeLift(18,-19);
 	robotShooter.makeShooter(6,-1);
 	robotTurner.makeTurner(10);
 	// vision sensor 16
+
+	lcdModeSelect();
 }
 
 /**
@@ -164,5 +166,5 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	lcdModeSelect();
+	
 }

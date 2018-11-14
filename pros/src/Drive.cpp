@@ -51,4 +51,7 @@ void Drive::tankDrive(int left, int right)
 	frontRight->move(right);
 	rearLeft->move(left);
 	rearRight->move(right);
+
+	lcd::print(1, "Left: %f", frontLeft->get_temperature());
+	lcd::print(2, "Right: %f", frontRight->get_temperature());
 }
