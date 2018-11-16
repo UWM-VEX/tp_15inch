@@ -40,7 +40,7 @@ okapi::ChassisControllerIntegrated Drive::makeDrive()
 	return ChassisControllerFactory::create(
 		  fl, fr, rl, rr,
 		  AbstractMotor::gearset::green,
-		  {5_in, 11.25_in}
+		  {2.5_in, 11.25_in}
 		);
 
 	//chassis = myChassis;
