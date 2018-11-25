@@ -7,7 +7,7 @@ Turner robotTurner;
 
 Turner::Turner() {};
 
-void Turner::makeTurner(int driverPort)
+void Turner::initTurner(int driverPort)
 {
 	bool driverReverse = driverPort < 0;
 	if(driverPort < 0) driverPort *= -1;

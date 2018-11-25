@@ -6,7 +6,7 @@ Shooter robotShooter;
 
 Shooter::Shooter() {};
 
-void Shooter::makeShooter(int driver1Port, int driver2Port)
+void Shooter::initShooter(int driver1Port, int driver2Port)
 {
 	bool driver1Reverse = driver1Port < 0;
 	if(driver1Port < 0) driver1Port *= -1;

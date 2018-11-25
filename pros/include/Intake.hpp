@@ -4,12 +4,10 @@
 class Intake{
 private:
 	pros::Motor* roller;
-	pros::Motor* elevator;
 public:
 	Intake();
-	void makeIntake(int rollerPort, int elevatorPort);
-	void setRoller(int speed);
-	void setElevator(int speed);
+	void initIntake(int rollerPort);
+	void set(int speed);
 };
 
 extern Intake robotIntake;

@@ -38,34 +38,31 @@ void opcontrol() {
 			robotShooter.set(0);
 		}
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 		{
-			robotIntake.setRoller(127);
-			robotIntake.setElevator(127);
+			robotClaw.set(127);
 		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			robotIntake.setRoller(-127);
-			robotIntake.setElevator(-127);
+			robotClaw.set(-127);
 		}
 		else
 		{
-			robotIntake.setRoller(0);
-			robotIntake.setElevator(0);
+			robotClaw.set(0);
 		}
 
-		/*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
-			robotLift.set(127);
+			robotIntake.set(127);
 		}
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
-			robotLift.set(-127);
+			robotIntake.set(-127);
 		}
 		else
 		{
-			robotLift.set(0);
-		}*/
+			robotIntake.set(0);
+		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
 			turnerAuto = false;

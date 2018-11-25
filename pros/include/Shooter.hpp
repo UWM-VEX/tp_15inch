@@ -6,7 +6,7 @@ class Shooter{
 	pros::Motor* driver2;
 public:
 	Shooter();
-	void makeShooter(int driver1Port, int driver2Port);
+	void initShooter(int driver1Port, int driver2Port);
 	void set(int speed);
 };
 

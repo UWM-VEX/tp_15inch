@@ -52,15 +52,15 @@
  */
 // using namespace pros;
 // using namespace pros::literals;
-using namespace okapi;
+//using namespace okapi;
 
 #define RED 0
 #define BLUE 1
 
 #include "auto.hpp"
+#include "Claw.hpp"
 #include "Drive.hpp"
 #include "Intake.hpp"
-#include "Lift.hpp"
 #include "Shooter.hpp"
 #include "Turner.hpp"
 

@@ -1,17 +1,17 @@
 Drive
-	Tank Drive
-	Motion Profiling Capabilities
-	Allign with Flag
+	Tank Drive x
+	Motion Profiling Capabilities x
+	(Nice to Have) Allign with Flag - Priority 1
 Shooter
-	Manual Drive
-	(Nice to Have) Detect when Armed (torque based?)
+	Manual Drive x
+	(Nice to Have) Detect when Armed (torque based?) - Priority 2
 Intake
-	In/Out
+	In/Out x
 Turner
-	Manual Drive
-	Auto Flip 180
+	Manual Drive x
+	Auto Flip 180 x
 Claw
-	Manual Open/Close
-	Auto Open/Close
+	Manual Open/Close x
+	(Nice to Have) Auto Open/Close - Priority 3
 		Close is torque based
 		Open is move to position relative

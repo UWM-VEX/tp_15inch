@@ -139,10 +139,10 @@ void lcdModeSelect()
 void initialize() 
 {
 	robotDrive.initDrive(-5,3,-11,7);
-	robotIntake.makeIntake(2,-20);
-	robotLift.makeLift(18,-19);
-	robotShooter.makeShooter(6,-1);
-	robotTurner.makeTurner(10);
+	robotIntake.initIntake(2);
+	robotShooter.initShooter(6,-1);
+	robotTurner.initTurner(10);
+	robotClaw.initClaw(12, 13);
 	// vision sensor 16
 
 	lcdModeSelect();
