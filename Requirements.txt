@@ -7,7 +7,7 @@ Shooter
 	(Nice to Have) Detect when Armed (torque based?)
 Intake
 	In/Out
-Flipper
+Turner
 	Manual Drive
 	Auto Flip 180
 Claw
