@@ -1,0 +1,17 @@
+Drive
+	Tank Drive
+	Motion Profiling Capabilities
+	Allign with Flag
+Shooter
+	Manual Drive
+	(Nice to Have) Detect when Armed (torque based?)
+Intake
+	In/Out
+Flipper
+	Manual Drive
+	Auto Flip 180
+Claw
+	Manual Open/Close
+	Auto Open/Close
+		Close is torque based
+		Open is move to position relative
