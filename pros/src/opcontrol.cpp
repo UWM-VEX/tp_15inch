@@ -25,30 +25,14 @@ void opcontrol() {
 		::std::cout << "Driving" << ::std::endl;
 		opcontrolDrive.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 		
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) ||
+			master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
 			robotShooter.set(127);
-		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-		{
-			robotShooter.set(-127);
 		}
 		else
 		{
 			robotShooter.set(0);
-		}
-
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-		{
-			robotClaw.set(127);
-		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-		{
-			robotClaw.set(-127);
-		}
-		else
-		{
-			robotClaw.set(0);
 		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -68,24 +52,6 @@ void opcontrol() {
 			turnerAuto = false;
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
 			turnerAuto = true;
-
-		if(turnerAuto)
-		{
-			robotTurner.rotate180(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) && ! lastTurnerRotate);
-
-			lastTurnerRotate = master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
-		}
-		else
-		{
-			if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
-			{
-				robotTurner.set(-30);
-			}
-			else
-			{
-				robotTurner.set(0);
-			}
-		}
 		
 	}
 }

@@ -1,5 +1,7 @@
 #include "main.h"
 
+using namespace okapi;
+
 Drive robotDrive;
 
 Drive::Drive() {}
@@ -20,7 +22,7 @@ okapi::ChassisControllerIntegrated Drive::makeDrive()
 	okapi::Motor rr(rearRight);
 
 	return ChassisControllerFactory::create(
-		  fl, fr, rl, rr,
+		  {fl, rl}, {fr, rr},
 		  AbstractMotor::gearset::green,
 		  {2.5_in, 11.25_in}
 		);
