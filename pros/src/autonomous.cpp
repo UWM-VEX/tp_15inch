@@ -11,11 +11,14 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
+using namespace okapi;
+
 void autonomous()
 {
-	okapi::ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
+	ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
 
-	auto profileController = okapi::AsyncControllerFactory::motionProfile(
+	auto profileController = AsyncControllerFactory::motionProfile(
 	  0.5,  // Maximum linear velocity of the Chassis in m/s
 	  2.0,  // Maximum linear acceleration of the Chassis in m/s/s
 	  10.0, // Maximum linear jerk of the Chassis in m/s/s/s

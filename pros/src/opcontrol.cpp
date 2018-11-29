@@ -20,10 +20,13 @@ void opcontrol() {
 
 	bool lastTurnerRotate = false;
 	bool turnerAuto = false;
+	int intakeState = INTAKE_STOP;
+	bool lastIntakeInButton = false;
+	bool lastIntakeOutButton = false;
 
 	while (true) {
 		::std::cout << "Driving" << ::std::endl;
-		opcontrolDrive.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+		opcontrolDrive.tank(master.get_analog(ANALOG_LEFT_Y)/127.0, master.get_analog(ANALOG_RIGHT_Y)/127.0);
 		
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) ||
 			master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
@@ -35,11 +38,37 @@ void opcontrol() {
 			robotShooter.set(0);
 		}
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && !lastIntakeInButton)
+		{
+			if(intakeState == INTAKE_IN)
+			{
+				intakeState = INTAKE_STOP;
+			}
+			else
+			{
+				intakeState = INTAKE_IN;
+			}
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !lastIntakeOutButton)
+		{
+			if(intakeState == INTAKE_OUT)
+			{
+				intakeState = INTAKE_STOP;
+			}
+			else
+			{
+				intakeState = INTAKE_OUT;
+			}
+		}
+
+		lastIntakeInButton = master.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+		lastIntakeOutButton = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+
+		if(intakeState == INTAKE_IN)
 		{
 			robotIntake.set(127);
 		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		else if(intakeState == INTAKE_OUT)
 		{
 			robotIntake.set(-127);
 		}
