@@ -5,7 +5,6 @@
  *
 **/
 
-
 // Flag dimensions and signatures
 const double top_flag = 46.6;
 const double mid_flag = 32.4;

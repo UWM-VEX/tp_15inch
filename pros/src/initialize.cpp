@@ -42,7 +42,7 @@ void lcdModeSelect()
 	int alliance = RED;
 	int autonomousSelection = 0;
 
-	const char * selectionText[] = {"DO_NOTHING", "TEST", "Motion Profile"}; // MODE DEFINITIONS
+	const char * selectionText[] = {"DO_NOTHING", "TEST", "Motion Profile", "Shoot 2"}; // MODE DEFINITIONS
 	int size = sizeof(selectionText) / sizeof(int);
 
 	autonomousSelection = 0;
@@ -128,6 +128,7 @@ void lcdModeSelect()
 
 	autonomousInfoStruct.alliance = alliance;
 	autonomousInfoStruct.mode = autonomousSelection;
+	pros::lcd::shutdown();
 }
 
 /**

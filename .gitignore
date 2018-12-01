@@ -37,3 +37,9 @@ pros/compile_commands.json
 pros/bin/output.bin
 pros/bin/output.elf
 pros/compile_commands.json
+pros/bin/*
+pros/compile_commands.json
+pros/include/api.h
+pros/include/okapi/*
+pros/include/pros/*
+pros/project.pros
