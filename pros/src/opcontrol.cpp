@@ -58,6 +58,8 @@ void opcontrol() {
 	const uint8_t blueFlagId = 2;
 	vision_sensor.set_signature(blueFlagId, &blueFlag);
 
+	vision_sensor.set_exposure(15);
+
 	//pros::lcd::initialize();
 	//pros::lcd::clear();
 	pros::vision_object_s_t flagToTrack;
@@ -112,31 +114,18 @@ void opcontrol() {
 			robotShooter.set(0);
 		}
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && !lastIntakeInButton)
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
-			if(intakeState == INTAKE_IN)
-			{
-				intakeState = INTAKE_STOP;
-			}
-			else
-			{
-				intakeState = INTAKE_IN;
-			}
+			intakeState = INTAKE_IN;
 		}
-		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !lastIntakeOutButton)
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
-			if(intakeState == INTAKE_OUT)
-			{
-				intakeState = INTAKE_STOP;
-			}
-			else
-			{
-				intakeState = INTAKE_OUT;
-			}
+			intakeState = INTAKE_OUT;
 		}
-
-		lastIntakeInButton = master.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
-		lastIntakeOutButton = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+		else
+		{
+			intakeState = INTAKE_STOP;
+		}
 
 		if(intakeState == INTAKE_IN)
 		{

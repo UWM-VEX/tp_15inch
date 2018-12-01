@@ -126,7 +126,7 @@ void autonomous()
 			pros::delay(1000);
 			robotShooter.set(0);
 
-			autoDrive.turnAngleAsync(180_deg);
+			/*autoDrive.turnAngleAsync(180_deg);
 
 			autoDrive.waitUntilSettled();
 
@@ -177,7 +177,7 @@ void autonomous()
 
 			robotShooter.set(127);
 			pros::delay(1000);
-			robotShooter.set(0);
+			robotShooter.set(0);*/
 		break;
 		default:
 		// Do nothing
