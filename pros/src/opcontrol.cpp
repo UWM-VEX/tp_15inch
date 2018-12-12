@@ -16,7 +16,6 @@
 
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	okapi::ChassisControllerIntegrated opcontrolDrive = robotDrive.makeDrive();
 
 	bool lastTurnerRotate = false;
 	bool turnerAuto = false;
@@ -86,22 +85,18 @@ void opcontrol() {
 		{
 			double turn = flagX * visionKP;
 
-			if(flagX > 5)
+			if(flagX > 5 || flagX < -5)
 			{
-				opcontrolDrive.arcade(0, turn);
-			}
-			else if(flagX < -5)
-			{
-				opcontrolDrive.arcade(0, turn);
+				robotDrive.arcadeDrive(0, (int) (turn * 127));
 			}
 			else
 			{
-				opcontrolDrive.arcade(0, 0);
+				robotDrive.arcadeDrive(0, 0);
 			}
 		}
 		else
 		{
-			opcontrolDrive.tank(master.get_analog(ANALOG_LEFT_Y)/127.0, master.get_analog(ANALOG_RIGHT_Y)/127.0);
+			robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
 		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) ||

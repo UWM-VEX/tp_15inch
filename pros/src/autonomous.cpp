@@ -16,10 +16,6 @@ using namespace okapi;
 
 void autonomous()
 {
-	ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
-
-	autoDrive.setMaxVelocity(125);
-
 	const int VISION_PORT = 2;
 
 	pros::Vision vision_sensor (VISION_PORT, pros::E_VISION_ZERO_CENTER);
@@ -60,12 +56,7 @@ void autonomous()
 
 	const double visionKP = 0.01;
 
-	auto profileController = AsyncControllerFactory::motionProfile(
-	  0.5,  // Maximum linear velocity of the Chassis in m/s
-	  2.0,  // Maximum linear acceleration of the Chassis in m/s/s
-	  10.0, // Maximum linear jerk of the Chassis in m/s/s/s
-	  autoDrive // Chassis Controller
-	);
+	uint32_t startTime = pros::millis();
 
 	bool allignedWithFlag = false;
 
@@ -75,24 +66,18 @@ void autonomous()
 
 		break;
 		case(TEST):
-			autoDrive.moveDistance(5_ft);
-			autoDrive.turnAngle(90_deg);
-			autoDrive.turnAngle(-90_deg);
-			autoDrive.moveDistance(-5_ft);
+			robotDrive.moveDistance(60);
+			robotDrive.turnAngle(90);
+			robotDrive.turnAngle(-90);
+			robotDrive.moveDistance(-50);
 		break;
 		case(MOTION_PROFILE):
-			profileController.generatePath({
-			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-			  okapi::Point{3_ft, 3_ft, 0_deg}}, // The next point in the profile, 3 feet forward
-			  "A" // Profile name
-			);
 
-			profileController.setTarget("A");
-
-			profileController.waitUntilSettled();
 		break;
 		case(SHOOT_2):
-			while(!allignedWithFlag)
+			startTime = pros::millis();
+
+			while(!allignedWithFlag && pros::millis() - startTime > 3000)
 			{
 				if(autonomousInfoStruct.alliance == RED)
 				{
@@ -111,12 +96,11 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					autoDrive.arcade(0, turn);
+					robotDrive.arcadeDrive(0, (int) (turn * 127));
 				}
 				else
 				{
-					autoDrive.arcade(0, 0);
-					allignedWithFlag = true;
+					robotDrive.arcadeDrive(0, 0);
 				}
 
 				pros::delay(20);
@@ -125,6 +109,10 @@ void autonomous()
 			robotShooter.set(127);
 			pros::delay(1000);
 			robotShooter.set(0);
+
+			robotIntake.set(127);
+
+			robotDrive.moveDistance(48, 127);
 
 			/*autoDrive.turnAngleAsync(180_deg);
 
