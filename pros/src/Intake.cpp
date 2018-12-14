@@ -8,14 +8,7 @@ Intake::Intake() {};
 
 void Intake::initIntake(int rollerPort)
 {
-	bool rollerReverse = rollerPort < 0;
-	if(rollerPort < 0) rollerPort *= -1;
-
-	Motor* rollerMotor = new Motor((std::uint8_t) rollerPort, E_MOTOR_GEARSET_18, rollerReverse, E_MOTOR_ENCODER_ROTATIONS);
-
-	roller = (Motor*) malloc(sizeof(Motor));
-
-	memcpy(roller, rollerMotor, sizeof(*rollerMotor));
+	roller = new Motor((std::uint8_t) abs(rollerPort), E_MOTOR_GEARSET_18, rollerPort < 0, E_MOTOR_ENCODER_ROTATIONS);
 }
 
 void Intake::set(int speed)

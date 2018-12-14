@@ -9,14 +9,7 @@ Turner::Turner() {};
 
 void Turner::initTurner(int driverPort)
 {
-	bool driverReverse = driverPort < 0;
-	if(driverPort < 0) driverPort *= -1;
-
-	Motor* driverMotor = new Motor((std::uint8_t) driverPort, E_MOTOR_GEARSET_18, driverReverse, E_MOTOR_ENCODER_ROTATIONS);
-
-	driver = (Motor*) malloc(sizeof(Motor));
-
-	memcpy(driver, driverMotor, sizeof(*driverMotor));
+	driver = new Motor((std::uint8_t) abs(driverPort), E_MOTOR_GEARSET_18, driverPort < 0, E_MOTOR_ENCODER_ROTATIONS);
 }
 
 void Turner::set(int speed)

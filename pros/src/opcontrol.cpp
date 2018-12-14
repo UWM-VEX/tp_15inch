@@ -135,10 +135,10 @@ void opcontrol() {
 			robotIntake.set(0);
 		}
 
-		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+		/*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
 			turnerAuto = false;
 		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
-			turnerAuto = true;
+			turnerAuto = true;*/
 		
 		/*pros::vision_object_s_t rtn = vision_sensor.get_by_size(0);
 		if(rtn.signature == redFlagId)
