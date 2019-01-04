@@ -108,15 +108,6 @@ void lcdModeSelect()
 			pros::lcd::print(5, "%s  %s", (alliance ? "Blue" : "Red"),
 					selectionText[autonomousSelection]);
 
-			long startTime = pros::millis();
-
-			//Wait 5 seconds
-			while((pros::competition::is_connected() ? (pros::millis() - startTime < 5000 && pros::competition::is_disabled())
-					: pros::millis() - startTime < 5000))
-			{
-				pros::Task::delay(20);
-			}
-
 			inModeSelection = 0;
 
 			break;
