@@ -16,16 +16,16 @@ void changeSelection(int valueToChange, int * selection, int size)
 		}
 	}
 	else if(valueToChange == 1)
+	{
+		if((* selection) < size - 1)
 		{
-			if((* selection) < size - 1)
-			{
-				(* selection) ++;
-			}
-			else
-			{
-				(* selection) = 0;
-			}
+			(* selection) ++;
 		}
+		else
+		{
+			(* selection) = 0;
+		}
+	}
 }
 
 void lcdModeSelect()
