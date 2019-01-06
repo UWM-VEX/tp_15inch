@@ -15,3 +15,8 @@ void Intake::set(int speed)
 {
 	roller->move(speed);
 }
+
+void Intake::printMotorTemps()
+{
+	lcd::print(0, "Roller: %f", roller->get_temperature());
+}

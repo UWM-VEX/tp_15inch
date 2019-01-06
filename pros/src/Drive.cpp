@@ -96,16 +96,10 @@ void Drive::turnAngle(double angle, int speed)
 	}
 }
 
-/*okapi::ChassisControllerIntegrated Drive::makeDrive()
+void Drive::printMotorTemps()
 {
-	Motor fl(frontLeft);
-	Motor fr(frontRight);
-	Motor rl(rearLeft);
-	Motor rr(rearRight);
-
-	return ChassisControllerFactory::create(
-		  {fl, rl}, {fr, rr},
-		  AbstractMotor::gearset::green,
-		  {4_in, 17_in}
-		);
-}*/
+	lcd::print(0, "FL: %f", frontLeft->get_temperature());
+	lcd::print(1, "FR: %f", frontRight->get_temperature());
+	lcd::print(2, "RL: %f", rearLeft->get_temperature());
+	lcd::print(3, "RR: %f", rearRight->get_temperature());
+}

@@ -8,6 +8,7 @@ public:
 	Claw();
 	void initClaw(int motor1Port, int motor2Port);
 	void set(int speed);
+	void printMotorTemps();
 };
 
 extern Claw robotClaw;

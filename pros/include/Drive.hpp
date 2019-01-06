@@ -19,6 +19,7 @@ public:
 	void arcadeDrive(int mag, int rot);
 	void moveDistance(double distance, int speed = 90);
 	void turnAngle(double angle, int speed = 90);
+	void printMotorTemps();
 };
 
 extern Drive robotDrive;

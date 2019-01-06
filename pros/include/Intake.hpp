@@ -12,6 +12,7 @@ public:
 	Intake();
 	void initIntake(int rollerPort);
 	void set(int speed);
+	void printMotorTemps();
 };
 
 extern Intake robotIntake;
