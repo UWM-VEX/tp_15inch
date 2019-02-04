@@ -1,33 +1,32 @@
 #include "main.h"
-#include <cmath>
 
 using namespace pros;
 
-Turner robotTurner;
+Flipper robotFlipper;
 
-Turner::Turner() {};
+Flipper::Flipper() {};
 
-void Turner::initTurner(int driverPort)
+void Flipper::initFlipper(int motorPort)
 {
-	driver = new Motor((std::uint8_t) abs(driverPort), E_MOTOR_GEARSET_18, driverPort < 0, E_MOTOR_ENCODER_ROTATIONS);
+	motor = new Motor((std::uint8_t) abs(motorPort), E_MOTOR_GEARSET_18, motorPort < 0, E_MOTOR_ENCODER_DEGREES);
 }
 
-void Turner::set(int speed)
+void Flipper::set(int speed)
 {
-	driver->move(speed);
+	motor->move(speed);
 }
 
-bool Turner::rotate180(bool isFirstTime)
+void Flipper::down()
 {
-	if(isFirstTime)
-	{
-		driver->move_relative(0.5, 100);
-	}
-
-	return std::abs(driver->get_position() - driver->get_target_position()) < 0.01;
+	motor->move_absolute(200, 127);
 }
 
-void Turner::printMotorTemps()
+void Flipper::up()
 {
-	lcd::print(0, "Turner: %f", driver->get_temperature());
+	motor->move_absolute(0, 127);
+}
+
+void Flipper::printMotorTemps()
+{
+	lcd::print(0, "Flipper: %f", motor->get_temperature());
 }

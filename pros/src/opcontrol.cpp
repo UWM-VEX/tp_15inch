@@ -16,17 +16,15 @@
 
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	pros::Controller partner(pros::E_CONTROLLER_PARTNER);
 
-	bool lastTurnerRotate = false;
-	bool turnerAuto = false;
 	int intakeState = INTAKE_STOP;
 	bool lastIntakeInButton = false;
 	bool lastIntakeOutButton = false;
 
-	pros::Vision vision_sensor = makeVisionSensor();
+	bool flipperAuto = false;
 
-	//pros::lcd::initialize();
-	//pros::lcd::clear();
+	pros::Vision vision_sensor = makeVisionSensor();
 
 	const double visionKP = 0.01;
 
@@ -87,6 +85,26 @@ void opcontrol() {
 		else
 		{
 			robotIntake.set(0);
+		}
+
+		if(std::abs(partner.get_analog(ANALOG_RIGHT_Y)) > 20)
+		{
+			robotFlipper.set(partner.get_analog(ANALOG_RIGHT_Y));
+			flipperAuto = false;
+		}
+		else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
+			robotFlipper.up();
+			flipperAuto = true;
+		}
+		else if(partner.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		{
+			robotFlipper.down();
+			flipperAuto = true;
+		}
+		else if(!flipperAuto)
+		{
+			robotFlipper.set(0);
 		}
 
 		/*if(master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))

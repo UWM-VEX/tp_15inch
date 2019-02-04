@@ -59,11 +59,10 @@
 
 #include "Vision.hpp"
 #include "auto.hpp"
-#include "Claw.hpp"
 #include "Drive.hpp"
 #include "Intake.hpp"
 #include "Shooter.hpp"
-#include "Turner.hpp"
+#include "Flipper.hpp"
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

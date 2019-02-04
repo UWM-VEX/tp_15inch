@@ -133,9 +133,8 @@ void initialize()
 	robotDrive.initDrive(-11,13,-12,14);
 	robotIntake.initIntake(-16);
 	robotShooter.initShooter(-17,18);
-	robotTurner.initTurner(4);
-	robotClaw.initClaw(2, 3);
-	// vision sensor 16
+	robotFlipper.initFlipper(3);
+	// vision sensor 2
 
 	lcdModeSelect();
 }
