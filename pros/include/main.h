@@ -57,6 +57,7 @@
 #define RED 0
 #define BLUE 1
 
+#include "Vision.hpp"
 #include "auto.hpp"
 #include "Claw.hpp"
 #include "Drive.hpp"
