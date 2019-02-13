@@ -42,7 +42,7 @@ void lcdModeSelect()
 	int alliance = RED;
 	int autonomousSelection = 0;
 
-	const char * selectionText[] = {"DO_NOTHING", "TEST", "Motion Profile", "Shoot 2"}; // MODE DEFINITIONS
+	const char * selectionText[] = {"DO_NOTHING", "TEST", "Shoot 2"}; // MODE DEFINITIONS
 	int size = sizeof(selectionText) / sizeof(int);
 
 	autonomousSelection = 0;
@@ -134,6 +134,7 @@ void initialize()
 	robotIntake.initIntake(-16);
 	robotShooter.initShooter(-17,18);
 	robotFlipper.initFlipper(3);
+	pros::ADIGyro gyro(2, 0.092);
 	// vision sensor 2
 
 	lcdModeSelect();

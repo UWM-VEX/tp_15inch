@@ -18,6 +18,8 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	pros::Controller partner(pros::E_CONTROLLER_PARTNER);
 
+	okapi::ChassisControllerIntegrated opcontrolDrive = robotDrive.makeDrive();
+
 	int intakeState = INTAKE_STOP;
 	bool lastIntakeInButton = false;
 	bool lastIntakeOutButton = false;
@@ -39,16 +41,16 @@ void opcontrol() {
 
 			if(flagX > 5 || flagX < -5)
 			{
-				robotDrive.arcadeDrive(0, (int) (turn * 127));
+				opcontrolDrive.arcade(0, turn);
 			}
 			else
 			{
-				robotDrive.arcadeDrive(0, 0);
+				opcontrolDrive.arcade(0, 0);
 			}
 		}
 		else
 		{
-			robotDrive.tankDrive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+			opcontrolDrive.tank((master.get_analog(ANALOG_LEFT_Y))/127.0, (master.get_analog(ANALOG_RIGHT_Y))/127.0);
 		}
 
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) ||

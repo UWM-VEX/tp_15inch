@@ -14,6 +14,44 @@
 
 using namespace okapi;
 
+void turnAngleGyro(double angle, ChassisControllerIntegrated* drive)
+{
+	pros::lcd::initialize();
+	const double kP = 0.05;
+	const double kI = 0;
+	const double kD = 0;;
+
+	uint32_t timeAtAngle = 0;
+
+	auto controller = IterativeControllerFactory::posPID(kP, kI, kD);
+	ADIGyro gyro(2, 0.092);
+	gyro.reset();
+
+	controller.setTarget(angle);
+	
+	do
+	{
+		double newInput = gyro.get();
+		double newOutput = controller.step(newInput);
+		drive->arcade(0, newOutput);
+
+
+		pros::lcd::print(0, "Gyro: %f", newInput);
+		pros::Task::delay(20);
+
+		if(std::abs(newInput - angle) < 1 && timeAtAngle == 0)
+		{
+			timeAtAngle = pros::millis();
+		}
+		else if(std::abs(newInput - angle) >= 1)
+		{
+			timeAtAngle = 0;
+		}
+	}while(!(pros::millis() - timeAtAngle > 250 && timeAtAngle != 0));
+
+	drive->stop();
+}
+
 void autonomous()
 {
 	pros::Vision vision_sensor = makeVisionSensor();
@@ -26,19 +64,39 @@ void autonomous()
 
 	bool allignedWithFlag = false;
 
+	ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
+
+	AsyncMotionProfileController* profileController;
+
+	profileController = new AsyncMotionProfileController(
+		TimeUtilFactory::create(),
+		1.0,  // Maximum linear velocity of the Chassis in m/s
+		1.0,  // Maximum linear acceleration of the Chassis in m/s/s
+		10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+		autoDrive.getChassisModel(), // Chassis Controller
+		autoDrive.getChassisScales(),
+		autoDrive.getGearsetRatioPair()
+	);
+
+	profileController->startThread();
+
 	switch(autonomousInfoStruct.mode)
 	{
 		case(DO_NOTHING):
 
 		break;
 		case(TEST):
-			robotDrive.moveDistance(60);
-			robotDrive.turnAngle(90);
-			robotDrive.turnAngle(-90);
-			robotDrive.moveDistance(-50);
-		break;
-		case(MOTION_PROFILE):
+			/*profileController->generatePath({
+			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{5_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "A" // Profile name
+			);
 
+			profileController->setTarget("A");
+
+			profileController->waitUntilSettled();*/
+
+			turnAngleGyro(90, &autoDrive);
 		break;
 		case(SHOOT_2):
 			startTime = pros::millis();
@@ -53,11 +111,11 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					robotDrive.arcadeDrive(0, (int) (turn * 127));
+					autoDrive.arcade(0, turn * 127);
 				}
 				else
 				{
-					robotDrive.arcadeDrive(0, 0);
+					autoDrive.arcade(0, 0);
 				}
 
 				pros::delay(20);
@@ -68,8 +126,6 @@ void autonomous()
 			robotShooter.set(0);
 
 			robotIntake.set(127);
-
-			robotDrive.moveDistance(48, 127);
 
 			/*autoDrive.turnAngleAsync(180_deg);
 

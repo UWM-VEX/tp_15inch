@@ -12,7 +12,6 @@ extern AutonomousInfo autonomousInfoStruct;
 
 #define DO_NOTHING 0
 #define TEST 1
-#define MOTION_PROFILE 2
-#define SHOOT_2 3
+#define SHOOT_2 2
 
 #endif
