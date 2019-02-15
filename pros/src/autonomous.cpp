@@ -14,25 +14,40 @@
 
 using namespace okapi;
 
-void turnAngleGyro(double angle, ChassisControllerIntegrated* drive)
+void turnAngleGyro(double angle, ChassisControllerIntegrated* drive, double maxSpeed = 0.5)
 {
 	pros::lcd::initialize();
-	const double kP = 0.05;
-	const double kI = 0;
-	const double kD = 0;;
 
 	uint32_t timeAtAngle = 0;
 
-	auto controller = IterativeControllerFactory::posPID(kP, kI, kD);
 	ADIGyro gyro(2, 0.092);
 	gyro.reset();
 
-	controller.setTarget(angle);
+	double newOutput;
+	double newInput;
 	
 	do
 	{
-		double newInput = gyro.get();
-		double newOutput = controller.step(newInput);
+		newInput = gyro.get();
+
+		if(std::abs(newInput - angle) > 10)
+		{
+			newOutput = 0.5;
+		}
+		else if(std::abs(newInput - angle) > 1)
+		{
+			newOutput = 0.2;
+		}
+		else
+		{
+			newOutput = 0;
+		}
+
+		if(angle - newInput < 0)
+		{
+			newOutput *= -1;
+		}
+
 		drive->arcade(0, newOutput);
 
 
@@ -71,8 +86,8 @@ void autonomous()
 	profileController = new AsyncMotionProfileController(
 		TimeUtilFactory::create(),
 		1.0,  // Maximum linear velocity of the Chassis in m/s
-		1.0,  // Maximum linear acceleration of the Chassis in m/s/s
-		10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+		0.5,  // Maximum linear acceleration of the Chassis in m/s/s
+		5.0, // Maximum linear jerk of the Chassis in m/s/s/s
 		autoDrive.getChassisModel(), // Chassis Controller
 		autoDrive.getChassisScales(),
 		autoDrive.getGearsetRatioPair()
@@ -125,39 +140,53 @@ void autonomous()
 			pros::delay(1000);
 			robotShooter.set(0);
 
+			turnAngleGyro(-175, &autoDrive);
+
+			profileController->generatePath({
+			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{30_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "lowFlag" // Profile name
+			);
+
+			profileController->setTarget("lowFlag", true);
+			profileController->waitUntilSettled();
+
+			profileController->removePath("lowFlag");
+
+			robotFlipper.downBlocking();
+			robotFlipper.upBlocking();
+
+			profileController->generatePath({
+			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{8_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "ball" // Profile name
+			);
+
 			robotIntake.set(127);
+			profileController->setTarget("ball", false);
+			profileController->waitUntilSettled();
 
-			/*autoDrive.turnAngleAsync(180_deg);
+			profileController->removePath("ball");
 
-			autoDrive.waitUntilSettled();
+			profileController->generatePath({
+			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{7_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "midFlag" // Profile name
+			);
 
-			pros::delay(500);
-
-			robotIntake.set(127);
-			autoDrive.moveDistanceAsync(36_in);
 			robotIntake.set(0);
-			autoDrive.waitUntilSettled();
+			profileController->setTarget("midFlag", true);
+			profileController->waitUntilSettled();
 
-			autoDrive.turnAngleAsync(-180_deg);
-			autoDrive.waitUntilSettled();
-			pros::delay(500);
+			profileController->removePath("midFlag");
 
-			autoDrive.moveDistanceAsync(72_in);
-			autoDrive.waitUntilSettled();
+			turnAngleGyro(180, &autoDrive);
 
-			allignedWithFlag = false;
-			while(!allignedWithFlag)
+			startTime = pros::millis();
+
+			while(!allignedWithFlag && pros::millis() - startTime > 3000)
 			{
-				if(autonomousInfoStruct.alliance == RED)
-				{
-					flagToTrack = vision_sensor.get_by_sig(0, blueFlagId);
-				}
-				else
-				{
-					flagToTrack = vision_sensor.get_by_sig(0, redFlagId);
-				}
-
-				int16_t flagX = flagToTrack.x_middle_coord;
+				int16_t flagX = getFlagX(vision_sensor);
 
 				std::cout << "Flag X: " << (int) flagX << std::endl;
 
@@ -165,12 +194,11 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					autoDrive.arcade(0, turn);
+					autoDrive.arcade(0, turn * 127);
 				}
 				else
 				{
 					autoDrive.arcade(0, 0);
-					allignedWithFlag = true;
 				}
 
 				pros::delay(20);
@@ -178,7 +206,95 @@ void autonomous()
 
 			robotShooter.set(127);
 			pros::delay(1000);
-			robotShooter.set(0);*/
+			robotShooter.set(0);
+
+			robotFlipper.downBlocking();
+
+			turnAngleGyro(90, &autoDrive);
+
+			profileController->generatePath({
+			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{4_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "cap1" // Profile name
+			);
+
+			profileController->setTarget("cap1", true);
+			profileController->waitUntilSettled();
+
+			profileController->removePath("cap1");	
+
+			robotFlipper.upBlocking();
+
+			turnAngleGyro(90, &autoDrive, 0.3);
+
+			profileController->generatePath({
+			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{24_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "driveCap2" // Profile name
+			);
+
+			profileController->setTarget("driveCap2", false);
+			profileController->waitUntilSettled();
+
+			profileController->removePath("driveCap2");
+
+			turnAngleGyro(70, &autoDrive);
+
+			robotIntake.set(127);
+
+			profileController->generatePath({
+			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{40_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "cap2" // Profile name
+			);
+
+			profileController->setTarget("cap2", false);
+			profileController->waitUntilSettled();
+
+			profileController->removePath("cap2");
+
+			pros::delay(1000);
+
+			profileController->generatePath({
+			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+			  okapi::Point{24_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  "back" // Profile name
+			);
+
+			profileController->setTarget("back", true);
+			profileController->waitUntilSettled();
+
+			profileController->removePath("back");
+
+			turnAngleGyro(45, &autoDrive);
+
+			robotIntake.set(0);
+
+			startTime = pros::millis();
+
+			while(!allignedWithFlag && pros::millis() - startTime > 3000)
+			{
+				int16_t flagX = getFlagX(vision_sensor);
+
+				std::cout << "Flag X: " << (int) flagX << std::endl;
+
+				double turn = flagX * visionKP;
+
+				if(flagX > 5 || flagX < -5)
+				{
+					autoDrive.arcade(0, turn * 127);
+				}
+				else
+				{
+					autoDrive.arcade(0, 0);
+				}
+
+				pros::delay(20);
+			}
+
+			robotShooter.set(127);
+			pros::delay(1000);
+			robotShooter.set(0);
 		break;
 		default:
 		// Do nothing
