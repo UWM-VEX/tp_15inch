@@ -114,9 +114,9 @@ void autonomous()
 			turnAngleGyro(90, &autoDrive);
 		break;
 		case(SHOOT_2):
-			startTime = pros::millis();
+			/*startTime = pros::millis();
 
-			while(!allignedWithFlag && pros::millis() - startTime > 3000)
+			while(!allignedWithFlag && pros::millis() - startTime < 3000)
 			{
 				int16_t flagX = getFlagX(vision_sensor);
 
@@ -126,7 +126,7 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					autoDrive.arcade(0, turn * 127);
+					autoDrive.arcade(0, turn);
 				}
 				else
 				{
@@ -134,13 +134,13 @@ void autonomous()
 				}
 
 				pros::delay(20);
-			}
+			}*/
 
 			robotShooter.set(127);
 			pros::delay(1000);
 			robotShooter.set(0);
 
-			turnAngleGyro(-175, &autoDrive);
+			turnAngleGyro(-170, &autoDrive);
 
 			profileController->generatePath({
 			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
@@ -158,7 +158,7 @@ void autonomous()
 
 			profileController->generatePath({
 			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-			  okapi::Point{8_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  okapi::Point{7_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "ball" // Profile name
 			);
 
@@ -168,23 +168,24 @@ void autonomous()
 
 			profileController->removePath("ball");
 
+			turnAngleGyro(180, &autoDrive);
+
 			profileController->generatePath({
 			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-			  okapi::Point{7_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  okapi::Point{6_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "midFlag" // Profile name
 			);
 
-			robotIntake.set(0);
-			profileController->setTarget("midFlag", true);
+			profileController->setTarget("midFlag", false);
 			profileController->waitUntilSettled();
 
 			profileController->removePath("midFlag");
 
-			turnAngleGyro(180, &autoDrive);
-
 			startTime = pros::millis();
 
-			while(!allignedWithFlag && pros::millis() - startTime > 3000)
+			allignedWithFlag = false;
+
+			while(!allignedWithFlag && pros::millis() - startTime < 3000)
 			{
 				int16_t flagX = getFlagX(vision_sensor);
 
@@ -194,7 +195,7 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					autoDrive.arcade(0, turn * 127);
+					autoDrive.arcade(0, turn);
 				}
 				else
 				{
@@ -204,6 +205,7 @@ void autonomous()
 				pros::delay(20);
 			}
 
+			robotIntake.set(0);
 			robotShooter.set(127);
 			pros::delay(1000);
 			robotShooter.set(0);
@@ -212,7 +214,7 @@ void autonomous()
 
 			turnAngleGyro(90, &autoDrive);
 
-			profileController->generatePath({
+			/*profileController->generatePath({
 			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
 			  okapi::Point{4_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "cap1" // Profile name
@@ -221,7 +223,7 @@ void autonomous()
 			profileController->setTarget("cap1", true);
 			profileController->waitUntilSettled();
 
-			profileController->removePath("cap1");	
+			profileController->removePath("cap1");*/
 
 			robotFlipper.upBlocking();
 
@@ -272,7 +274,9 @@ void autonomous()
 
 			startTime = pros::millis();
 
-			while(!allignedWithFlag && pros::millis() - startTime > 3000)
+			allignedWithFlag = false;
+
+			while(!allignedWithFlag && pros::millis() - startTime < 3000)
 			{
 				int16_t flagX = getFlagX(vision_sensor);
 
@@ -282,7 +286,7 @@ void autonomous()
 
 				if(flagX > 5 || flagX < -5)
 				{
-					autoDrive.arcade(0, turn * 127);
+					autoDrive.arcade(0, turn);
 				}
 				else
 				{
