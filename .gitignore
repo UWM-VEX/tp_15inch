@@ -43,3 +43,4 @@ pros/include/api.h
 pros/include/okapi/*
 pros/include/pros/*
 pros/project.pros
+pros/firmware/*
