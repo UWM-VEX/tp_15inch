@@ -81,9 +81,9 @@ void autonomous()
 
 	ChassisControllerIntegrated autoDrive = robotDrive.makeDrive();
 
-	AsyncMotionProfileController* profileController;
+	GyroProfiling* profileController;
 
-	profileController = new AsyncMotionProfileController(
+	profileController = new GyroProfiling(
 		TimeUtilFactory::create(),
 		1.0,  // Maximum linear velocity of the Chassis in m/s
 		0.5,  // Maximum linear acceleration of the Chassis in m/s/s
@@ -93,6 +93,8 @@ void autonomous()
 		autoDrive.getGearsetRatioPair()
 	);
 
+	profileController->setGyroPort(2);
+
 	profileController->startThread();
 
 	switch(autonomousInfoStruct.mode)
@@ -101,7 +103,7 @@ void autonomous()
 
 		break;
 		case(TEST):
-			/*profileController->generatePath({
+			profileController->generatePath({
 			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
 			  okapi::Point{5_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "A" // Profile name
@@ -109,9 +111,9 @@ void autonomous()
 
 			profileController->setTarget("A");
 
-			profileController->waitUntilSettled();*/
+			profileController->waitUntilSettled();
 
-			turnAngleGyro(90, &autoDrive);
+			//turnAngleGyro(90, &autoDrive);
 		break;
 		case(SHOOT_2):
 			/*startTime = pros::millis();

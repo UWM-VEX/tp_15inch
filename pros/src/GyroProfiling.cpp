@@ -2,7 +2,26 @@
 
 using namespace okapi;
 
-GyroProfiling::setGyroPort(int port)
+/*GyroProfiling::GyroProfiling(const TimeUtil &itimeUtil,
+				  const double imaxVel,
+				  const double imaxAccel,
+				  const double imaxJerk,
+				  const std::shared_ptr<ChassisModel> &imodel,
+				  const ChassisScales &iscales,
+				  AbstractMotor::GearsetRatioPair ipair) 
+				  : okapi::AsyncMotionProfileController(
+				  const TimeUtil &itimeUtil,
+				  const double imaxVel,
+				  const double imaxAccel,
+				  const double imaxJerk,
+				  const std::shared_ptr<ChassisModel> &imodel,
+				  const ChassisScales &iscales,
+				  AbstractMotor::GearsetRatioPair ipair)
+				  {
+
+				  }*/
+
+void GyroProfiling::setGyroPort(int port)
 {
 	gyroPort = port;
 }
@@ -17,20 +36,20 @@ void GyroProfiling::executeSinglePath(const TrajectoryPair &path, std::unique_pt
 	double gyroAngle;
 
     for (int i = 0; i < path.length && !isDisabled(); ++i) {
-	    const auto leftRPM = convertLinearToRotational(path.left[i].velocity * mps).convert(rpm);
-	    const auto rightRPM = convertLinearToRotational(path.right[i].velocity * mps).convert(rpm);
+	    auto leftRPM = convertLinearToRotational(path.left[i].velocity * mps).convert(rpm);
+	    auto rightRPM = convertLinearToRotational(path.right[i].velocity * mps).convert(rpm);
 
 	    gyroAngle = gyro.get();
 
 	    if(gyroAngle > 2)
 	    {
-	    	leftRPM -= 20;
-	    	rightRPM += 20;
+	    	leftRPM -= 5;
+	    	rightRPM += 5;
 	    }
 	    else if(gyroAngle < 2)
 	    {
-	    	leftRPM += 20;
-	    	rightRPM -= 20;
+	    	leftRPM += 5;
+	    	rightRPM -= 5;
 	    }
 
 	    if(leftRPM > 200)
