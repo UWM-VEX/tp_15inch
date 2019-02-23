@@ -30,6 +30,9 @@ void GyroProfiling::executeSinglePath(const TrajectoryPair &path, std::unique_pt
 {
 	const auto reversed = direction.load(std::memory_order_acquire);
 
+	pros::lcd::initialize();
+	pros::lcd::print(0, "Reversed %d", reversed);
+
 	ADIGyro gyro(gyroPort, 0.092);
 	gyro.reset();
 
@@ -43,13 +46,30 @@ void GyroProfiling::executeSinglePath(const TrajectoryPair &path, std::unique_pt
 
 	    if(gyroAngle > 2)
 	    {
-	    	leftRPM -= 5;
-	    	rightRPM += 5;
+	    	if(reversed < 0)
+	    	{
+	    		leftRPM += 5;
+	    		rightRPM -= 5;
+	    	}
+	    	else
+	    	{
+	    		leftRPM -= 5;
+	    		rightRPM += 5;
+	    	}
 	    }
-	    else if(gyroAngle < 2)
+	    else if(gyroAngle < -2)
 	    {
-	    	leftRPM += 5;
-	    	rightRPM -= 5;
+	    	if(reversed < 0)
+	    	{
+	    		leftRPM -= 5;
+	    		rightRPM += 5;
+	    	}
+	    	else
+	    	{
+	    		leftRPM += 5;
+	    		rightRPM -= 5;
+	    	}
+	    	
 	    }
 
 	    if(leftRPM > 200)
