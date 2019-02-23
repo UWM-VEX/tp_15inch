@@ -138,15 +138,19 @@ void autonomous()
 				pros::delay(20);
 			}*/
 
+			robotIntake.set(127);
+			pros::delay(250);
+			robotIntake.set(0);
+
 			robotShooter.set(127);
 			pros::delay(1000);
 			robotShooter.set(0);
 
-			turnAngleGyro(-170, &autoDrive);
+			turnAngleGyro(-185, &autoDrive);
 
 			profileController->generatePath({
 			  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-			  okapi::Point{30_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  okapi::Point{36_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "lowFlag" // Profile name
 			);
 
@@ -156,16 +160,17 @@ void autonomous()
 			profileController->removePath("lowFlag");
 
 			robotFlipper.downBlocking();
-			robotFlipper.upBlocking();
 
 			profileController->generatePath({
 			  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-			  okapi::Point{7_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+			  okapi::Point{90_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 			  "ball" // Profile name
 			);
 
 			robotIntake.set(127);
 			profileController->setTarget("ball", false);
+			pros::delay(1000);
+			robotFlipper.upBlocking();
 			profileController->waitUntilSettled();
 
 			profileController->removePath("ball");
