@@ -33,7 +33,7 @@ TEMPLATE_FILES=$(INCDIR)/**/*.h $(INCDIR)/**/*.hpp
 .DEFAULT_GOAL=quick
 
 # Set to 1 to enable hot/cold linking
-USE_PACKAGE:=1
+USE_PACKAGE:=0
 
 ################################################################################
 ################################################################################
