@@ -25,6 +25,8 @@ void turnAngleGyro(double angle, ChassisControllerIntegrated* drive, double maxS
 
 	double newOutput;
 	double newInput;
+
+	uint32_t startTime = pros::millis();
 	
 	do
 	{
@@ -36,7 +38,7 @@ void turnAngleGyro(double angle, ChassisControllerIntegrated* drive, double maxS
 		}
 		else if(std::abs(newInput - angle) > 1)
 		{
-			newOutput = 0.2;
+			newOutput = 0.25;
 		}
 		else
 		{
@@ -62,7 +64,7 @@ void turnAngleGyro(double angle, ChassisControllerIntegrated* drive, double maxS
 		{
 			timeAtAngle = 0;
 		}
-	}while(!(pros::millis() - timeAtAngle > 250 && timeAtAngle != 0));
+	}while(!(pros::millis() - timeAtAngle > 250 && timeAtAngle != 0) && pros::millis() - startTime < 3000);
 
 	drive->stop();
 }
@@ -179,7 +181,7 @@ void autonomous()
 
 				profileController->generatePath({
 				  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{2_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{28_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "midFlag" // Profile name
 				);
 
@@ -188,11 +190,11 @@ void autonomous()
 
 				profileController->removePath("midFlag");
 
-				turnAngleGyro(172.5, &autoDrive);
+				turnAngleGyro(175, &autoDrive);
 
 				profileController->generatePath({
 				  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{5_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{56_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "midFlag2" // Profile name
 				);
 
@@ -352,24 +354,36 @@ void autonomous()
 				pros::delay(1000);
 				robotShooter.set(0);
 
-				turnAngleGyro(180, &autoDrive);
+				turnAngleGyro(-5, &autoDrive);
 
 				profileController->generatePath({
 				  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{36_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{56_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "lowFlag" // Profile name
 				);
 
-				profileController->setTarget("lowFlag", true);
+				profileController->setTarget("lowFlag", false);
 				profileController->waitUntilSettled();
 
 				profileController->removePath("lowFlag");
 
-				robotFlipper.downBlocking();
+				profileController->generatePath({
+				  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+				  okapi::Point{36_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  "lowFlag2" // Profile name
+				);
+
+				profileController->setTarget("lowFlag2", true);
+				profileController->waitUntilSettled();
+
+				profileController->removePath("lowFlag2");
+
+				turnAngleGyro(180, &autoDrive);
+
 
 				profileController->generatePath({
 				  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{90_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{72_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "ball" // Profile name
 				);
 
@@ -383,7 +397,7 @@ void autonomous()
 
 				profileController->generatePath({
 				  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{2_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{4_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "midFlag" // Profile name
 				);
 
@@ -392,11 +406,11 @@ void autonomous()
 
 				profileController->removePath("midFlag");
 
-				turnAngleGyro(-172.5, &autoDrive);
+				turnAngleGyro(-175, &autoDrive);
 
 				profileController->generatePath({
 				  okapi::Point{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-				  okapi::Point{5_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+				  okapi::Point{3_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "midFlag2" // Profile name
 				);
 
@@ -468,7 +482,7 @@ void autonomous()
 
 				robotIntake.set(127);
 
-				profileController->generatePath({
+				/*profileController->generatePath({
 				  okapi::Point{0_in, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
 				  okapi::Point{48_in, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
 				  "cap2" // Profile name
@@ -522,7 +536,7 @@ void autonomous()
 
 				robotShooter.set(127);
 				pros::delay(1000);
-				robotShooter.set(0);
+				robotShooter.set(0);*/
 			}
 		break;
 		default:
