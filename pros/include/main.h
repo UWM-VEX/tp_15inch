@@ -60,6 +60,7 @@
 #include "Vision.hpp"
 #include "auto.hpp"
 #include "Drive.hpp"
+#include "GyroProfiling.hpp"
 #include "Intake.hpp"
 #include "Shooter.hpp"
 #include "Flipper.hpp"
